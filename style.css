@@ -1,84 +1,158 @@
+/* ================= GLOBAL ================= */
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
+  font-family: "Poppins", Arial, sans-serif;
+  background: #e9eef5;
   margin: 0;
   padding: 0;
-}
-
-header {
-  background: #0366d6;
-  color: white;
+  color: #1f1f1f;
   text-align: center;
-  padding: 1rem;
 }
 
-.filtros {
+/* ================= CABEÇALHO ================= */
+header {
+  background: linear-gradient(100deg, #4b6cb7, #182848);
+  color: #fff;
+  padding: 75px 0 90px;
+  border-bottom-left-radius: 45px;
+  border-bottom-right-radius: 45px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent);
+  animation: brilho 4.5s infinite linear;
+}
+
+@keyframes brilho {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.35);
+}
+
+header p {
+  font-size: 1.25rem;
+  opacity: 0.98;
+  margin-top: 8px;
+}
+
+/* ================= FILTROS ================= */
+#filtros {
+  margin: 40px 0;
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin: 1rem;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.filtros select, .filtros button {
-  padding: 0.5rem;
+#filtros select,
+#filtros button {
+  padding: 14px 20px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #d2d6de;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  transition: 0.25s;
+  min-width: 180px;
 }
 
-.resumo {
+#filtros select:hover {
+  border-color: #4b6cb7;
+  transform: translateY(-3px);
+}
+
+#filtros button {
+  background: linear-gradient(135deg, #2575fc, #1a5bd9);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+}
+
+#filtros button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #1a5bd9, #0d3a91);
+}
+
+/* ================= CARDS ================= */
+.cards {
   display: flex;
-  justify-content: space-around;
-  margin: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin: 40px auto;
+  max-width: 1300px;
 }
 
 .card {
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  padding: 30px;
+  width: 265px;
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+  transition: 0.28s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 14px 25px rgba(0,0,0,0.28);
+}
+
+.card p {
+  font-size: 1.9rem;
   font-weight: bold;
+  margin: 0;
 }
 
-.graficos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem;
+/* ================= GRÁFICOS ================= */
+.charts {
+  max-width: 1350px;
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
 }
 
-.grafico {
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.chart-container {
+  background: #fff;
+  padding: 25px;
+  width: 380px;
+  height: 350px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  transition: 0.28s;
 }
 
-.top-vagas {
-  margin: 2rem;
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.chart-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* RESPONSIVIDADE */
+@media (max-width: 900px) {
+  .chart-container { width: 90%; height: auto; }
+  #filtros select, #filtros button { min-width: 140px; }
+  header h1 { font-size: 2.1rem; padding-top: 40px; padding-bottom: 50px; }
 }
 
-thead {
-  background: #0366d6;
-  color: white;
-}
-
-th, td {
-  padding: 0.8rem;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
+/* ================= RODAPÉ ================= */
 footer {
-  text-align: center;
-  padding: 1rem;
-  background: #0366d6;
-  color: white;
-  margin-top: 2rem;
+  margin-top: 60px;
+  padding: 30px;
+  background: #f8fafc;
+  font-size: 1rem;
+  color: #555;
+  border-top: 1px solid #dcdcdc;
 }
