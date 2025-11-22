@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard de Empregabilidade TI 2025</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de TI Brasil 2025</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+  <!-- ===== CABEÇALHO ===== -->
   <header>
-    <h1>📊 Empregabilidade em TI - Brasil 2020 a 2025</h1>
+    <h1>Dashboard de TI - Brasil 2025</h1>
+    <p>Análise do mercado de tecnologia no Brasil</p>
   </header>
 
-  <section class="filtros">
-    <label for="area-filter">Área:</label>
-    <select id="area-filter">
-      <option value="all">Todas</option>
-    </select>
+  <main>
 
-    <label for="regiao-filter">Região:</label>
-    <select id="regiao-filter">
-      <option value="all">Todas</option>
-    </select>
+    <!-- ===== FILTROS ===== -->
+    <section id="filtros">
+      <select id="area">
+        <option value="todas">Todas as áreas</option>
+        <option value="Cibersegurança">Cibersegurança</option>
+        <option value="Cloud">Cloud</option>
+        <option value="IA">IA</option>
+        <option value="Web">Web</option>
+        <option value="Dados">Dados</option>
+        <option value="DevOps">DevOps</option>
+      </select>
 
-    <button id="reset-filters">Resetar Filtros</button>
-  </section>
+      <select id="regiao">
+        <option value="todas">Todas as regiões</option>
+        <option value="Sudeste">Sudeste</option>
+        <option value="Sul">Sul</option>
+        <option value="Nordeste">Nordeste</option>
+        <option value="Centro-Oeste">Centro-Oeste</option>
+        <option value="Norte">Norte</option>
+      </select>
 
-  <section class="resumo">
-    <div class="card">Total de Vagas: <span id="total-vagas">0</span></div>
-    <div class="card">Salário Médio: <span id="salario-medio">R$ 0</span></div>
-    <div class="card">Área com mais vagas: <span id="area-mais-vagas">-</span></div>
-  </section>
+      <button id="reset">Redefinir</button>
+    </section>
 
-  <section class="graficos">
-    <div class="grafico">
-      <h2>Distribuição por Área</h2>
-      <canvas id="area-chart"></canvas>
-    </div>
-    <div class="grafico">
-      <h2>Distribuição por Região</h2>
-      <canvas id="regiao-chart"></canvas>
-    </div>
-    <div class="grafico">
-      <h2>Salário Médio por Cargo</h2>
-      <canvas id="salario-cargo-chart"></canvas>
-    </div>
-    <div class="grafico">
-      <h2>📈 Evolução de Vagas em TI (2020-2025)</h2>
-      <canvas id="ano-chart"></canvas>
-    </div>
-  </section>
+    <!-- ===== CARDS ===== -->
+    <section class="cards">
+      <div class="card">
+        <h3>Vagas em TI</h3>
+        <p id="vagas">--</p>
+      </div>
 
-  <section class="top-vagas">
-    <h2>🏆 Top 10 Vagas com Maiores Salários</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Área</th>
-          <th>Cargo</th>
-          <th>Região</th>
-          <th>Salário</th>
-          <th>Ano</th>
-        </tr>
-      </thead>
-      <tbody id="top-vagas-body"></tbody>
-    </table>
-  </section>
+      <div class="card">
+        <h3>Crescimento do Setor</h3>
+        <p id="crescimento">--</p>
+      </div>
 
+      <div class="card">
+        <h3>Salário Médio</h3>
+        <p id="salario">--</p>
+      </div>
+    </section>
+
+    <!-- ===== GRÁFICOS ===== -->
+    <section class="charts">
+      <div class="chart-container"><canvas id="pieChart"></canvas></div>
+      <div class="chart-container"><canvas id="barChart"></canvas></div>
+      <div class="chart-container"><canvas id="salaryChart"></canvas></div>
+      <div class="chart-container"><canvas id="graficoLinguagens"></canvas></div>
+      <div class="chart-container"><canvas id="graficoRegioes"></canvas></div>
+      <div class="chart-container"><canvas id="graficoAreas"></canvas></div>
+    </section>
+
+  </main>
+
+  <!-- ===== RODAPÉ ===== -->
   <footer>
-    <p>© 2025 Dashboard Empregabilidade TI - Dados simulados</p>
+    <p>© 2025 Dashboard de TI Brasil - Desenvolvido por Adriely</p>
   </footer>
 
+  <!-- SCRIPT -->
   <script src="script.js"></script>
 </body>
 </html>
