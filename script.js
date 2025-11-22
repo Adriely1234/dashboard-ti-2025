@@ -1,170 +1,137 @@
-// ===============================
-// DASHBOARD DE TI BRASIL - 2025
-// ===============================
-Chart.defaults.maintainAspectRatio = false;
-Chart.defaults.responsive = true;
-Chart.defaults.plugins.legend.position = "bottom";
+// Dados simulados entre 2020 e 2025
+const vagas = [];
+const areas = ["Inteligência Artificial", "Cibersegurança", "Cloud Computing", "Ciência de Dados", "DevOps", "Desenvolvimento Web"];
+const cargos = ["Júnior", "Pleno", "Sênior"];
+const regioes = ["SP","RJ","MG","RS","PR","SC","DF","BA","PE","CE","GO","MT","MS","PA","PB","PI","RN","RO","RR","SE","TO","AC","AL","AM","AP"];
 
-// ===============================
-// DADOS 2025
-// ===============================
-const dados2025 = {
-  vagasTotais: 184500,
-  crescimento: 12.5,
-  salarioMedio: 8800,
-
-  distribuicaoPorArea: {
-    labels: ["Cibersegurança", "Cloud", "IA", "Web", "Dados", "DevOps"],
-    valores: [15, 18, 20, 22, 16, 9]
-  },
-  distribuicaoPorRegiao: {
-    labels: ["Sudeste", "Sul", "Nordeste", "Centro-Oeste", "Norte"],
-    valores: [55, 18, 14, 8, 5]
-  },
-  salariosPorArea: {
-    labels: ["Cibersegurança", "Cloud", "IA", "Web", "Dados", "DevOps"],
-    valores: [9500, 10200, 11800, 8700, 11000, 9700]
-  },
-  linguagensMaisUsadas: {
-    labels: ["JavaScript", "Python", "Java", "TypeScript", "C#", "Go"],
-    valores: [32, 28, 15, 14, 11, 8]
-  },
-  areasEmAlta: {
-    labels: ["IA e Machine Learning", "Cibersegurança", "Cloud", "Mobile", "Data Science"],
-    valores: [28, 24, 20, 16, 12]
-  }
-};
-
-// ===============================
-// INSTÂNCIAS DOS GRÁFICOS
-// ===============================
-let graficos = {
-  pie: null,
-  bar: null,
-  salary: null,
-  linguagens: null,
-  regioes: null,
-  areas: null
-};
-
-// ===============================
-// ATUALIZA CARDS AO CARREGAR
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("vagas").textContent = dados2025.vagasTotais.toLocaleString("pt-BR");
-  document.getElementById("crescimento").textContent = dados2025.crescimento + "%";
-  document.getElementById("salario").textContent = "R$ " + dados2025.salarioMedio.toLocaleString("pt-BR");
-
-  criarGraficos();
-});
-
-// ===============================
-// FUNÇÃO: CRIAR OS GRÁFICOS
-// ===============================
-function criarGraficos() {
-  // destrói gráficos antigos
-  Object.values(graficos).forEach(g => { if (g) g.destroy(); });
-
-  graficos.pie = new Chart(document.getElementById("pieChart"), {
-    type: "pie",
-    data: {
-      labels: dados2025.distribuicaoPorArea.labels,
-      datasets: [{
-        data: dados2025.distribuicaoPorArea.valores,
-        backgroundColor: ["#2575fc","#6a11cb","#28a745","#ffc107","#17a2b8","#dc3545"]
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Distribuição de Vagas por Área" } }
+// Gerar 3000 vagas aleatórias (2020-2025)
+for(let ano=2020; ano<=2025; ano++){
+    for(let i=0; i<500; i++){
+        const cargo = cargos[Math.floor(Math.random()*cargos.length)];
+        const salario = Math.round((cargo==="Júnior"?8000:cargo==="Pleno"?13000:20000)*(1+(Math.random()-0.5)));
+        vagas.push({
+            ID: vagas.length+1,
+            Area: areas[Math.floor(Math.random()*areas.length)],
+            Cargo: cargo,
+            Regiao: regioes[Math.floor(Math.random()*regioes.length)],
+            Salario: salario,
+            Ano: ano
+        });
     }
-  });
-
-  graficos.bar = new Chart(document.getElementById("barChart"), {
-    type: "bar",
-    data: {
-      labels: dados2025.distribuicaoPorRegiao.labels,
-      datasets: [{
-        data: dados2025.distribuicaoPorRegiao.valores,
-        label: "Vagas (%)",
-        backgroundColor: "#2575fc"
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Vagas por Região" } }
-    }
-  });
-
-  graficos.salary = new Chart(document.getElementById("salaryChart"), {
-    type: "line",
-    data: {
-      labels: dados2025.salariosPorArea.labels,
-      datasets: [{
-        data: dados2025.salariosPorArea.valores,
-        label: "Salário Médio (R$)",
-        borderColor: "#6a11cb",
-        backgroundColor: "rgba(106,17,203,0.2)",
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Salários Médios por Área" } }
-    }
-  });
-
-  graficos.linguagens = new Chart(document.getElementById("graficoLinguagens"), {
-    type: "bar",
-    data: {
-      labels: dados2025.linguagensMaisUsadas.labels,
-      datasets: [{
-        data: dados2025.linguagensMaisUsadas.valores,
-        label: "Uso (%)",
-        backgroundColor: ["#2575fc","#6a11cb","#28a745","#ffc107","#17a2b8","#dc3545"]
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Linguagens Mais Usadas" } }
-    }
-  });
-
-  graficos.regioes = new Chart(document.getElementById("graficoRegioes"), {
-    type: "doughnut",
-    data: {
-      labels: dados2025.distribuicaoPorRegiao.labels,
-      datasets: [{
-        data: dados2025.distribuicaoPorRegiao.valores,
-        backgroundColor: ["#2575fc","#6a11cb","#28a745","#ffc107","#dc3545"]
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Distribuição Regional" } }
-    }
-  });
-
-  graficos.areas = new Chart(document.getElementById("graficoAreas"), {
-    type: "line",
-    data: {
-      labels: dados2025.areasEmAlta.labels,
-      datasets: [{
-        data: dados2025.areasEmAlta.valores,
-        label: "Tendência (%)",
-        borderColor: "#28a745",
-        backgroundColor: "rgba(40,167,69,0.2)",
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      plugins: { title: { display: true, text: "Áreas em Alta em 2025" } }
-    }
-  });
 }
 
-// ===============================
-// BOTÃO: REDEFINIR
-// ===============================
-document.getElementById("reset").addEventListener("click", () => {
-  document.getElementById("area").value = "todas";
-  document.getElementById("regiao").value = "todas";
-  criarGraficos();
+// Popular filtros
+function popularFiltros(){
+    const areaFilter = document.getElementById("area-filter");
+    [...new Set(vagas.map(v=>v.Area))].forEach(a=>{
+        areaFilter.innerHTML += `<option value="${a}">${a}</option>`;
+    });
+
+    const regiaoFilter = document.getElementById("regiao-filter");
+    [...new Set(vagas.map(v=>v.Regiao))].forEach(r=>{
+        regiaoFilter.innerHTML += `<option value="${r}">${r}</option>`;
+    });
+}
+
+// Atualizar dashboard
+function atualizarDashboard(){
+    const area = document.getElementById("area-filter").value;
+    const regiao = document.getElementById("regiao-filter").value;
+
+    const filtradas = vagas.filter(v=>
+        (area==="all" || v.Area===area) &&
+        (regiao==="all" || v.Regiao===regiao)
+    );
+
+    document.getElementById("total-vagas").textContent = filtradas.length;
+    document.getElementById("salario-medio").textContent = `R$ ${Math.round(filtradas.reduce((a,b)=>a+b.Salario,0)/filtradas.length || 0)}`;
+    
+    const areaMaisVagas = filtradas.reduce((acc,v,_,arr)=>{
+        const countV = arr.filter(x=>x.Area===v.Area).length;
+        const countAcc = arr.filter(x=>x.Area===acc).length;
+        return countV>countAcc?v.Area:acc;
+    },filtradas[0]?.Area || "-");
+
+    document.getElementById("area-mais-vagas").textContent = areaMaisVagas;
+
+    // Top 10 salários
+    const top10 = filtradas.sort((a,b)=>b.Salario-a.Salario).slice(0,10);
+    const tbody = document.getElementById("top-vagas-body");
+    tbody.innerHTML = "";
+    top10.forEach(v=>{
+        tbody.innerHTML += `<tr>
+            <td>${v.ID}</td>
+            <td>${v.Area}</td>
+            <td>${v.Cargo}</td>
+            <td>${v.Regiao}</td>
+            <td>R$ ${v.Salario}</td>
+            <td>${v.Ano}</td>
+        </tr>`;
+    });
+
+    gerarGraficos(filtradas);
+}
+
+// Gráficos
+let areaChart=null, regiaoChart=null, salarioCargoChart=null, anoChart=null;
+function gerarGraficos(data){
+    const ctxArea = document.getElementById("area-chart").getContext("2d");
+    const ctxRegiao = document.getElementById("regiao-chart").getContext("2d");
+    const ctxSalarioCargo = document.getElementById("salario-cargo-chart").getContext("2d");
+    const ctxAno = document.getElementById("ano-chart").getContext("2d");
+
+    const areaData={}, regiaoData={}, salarioCargoData={}, anoData={};
+    data.forEach(v=>{
+        areaData[v.Area]=(areaData[v.Area]||0)+1;
+        regiaoData[v.Regiao]=(regiaoData[v.Regiao]||0)+1;
+        salarioCargoData[v.Cargo]=(salarioCargoData[v.Cargo]||[]).concat(v.Salario);
+        anoData[v.Ano]=(anoData[v.Ano]||0)+1;
+    });
+
+    const salarioCargoLabels = Object.keys(salarioCargoData);
+    const salarioCargoValues = salarioCargoLabels.map(c=>{
+        const arr = salarioCargoData[c];
+        return Math.round(arr.reduce((a,b)=>a+b,0)/arr.length);
+    });
+
+    [areaChart, regiaoChart, salarioCargoChart, anoChart].forEach(c=>{if(c) c.destroy();});
+
+    areaChart = new Chart(ctxArea,{
+        type:'doughnut',
+        data:{ labels:Object.keys(areaData), datasets:[{data:Object.values(areaData), backgroundColor:["#FF6384","#36A2EB","#FFCE56","#4BC0C0","#9966FF","#FF9F40"]}] },
+        options:{ plugins:{ legend:{ position:"bottom" } } }
+    });
+
+    regiaoChart = new Chart(ctxRegiao,{
+        type:'bar',
+        data:{ labels:Object.keys(regiaoData), datasets:[{label:'Vagas',data:Object.values(regiaoData),backgroundColor:'#36A2EB'}] },
+        options:{ scales:{ y:{ beginAtZero:true } } }
+    });
+
+    salarioCargoChart = new Chart(ctxSalarioCargo,{
+        type:'bar',
+        data:{ labels:salarioCargoLabels, datasets:[{label:'Salário Médio (R$)', data:salarioCargoValues, backgroundColor:'#FF6384'}] },
+        options:{ scales:{ y:{ beginAtZero:true } } }
+    });
+
+    anoChart = new Chart(ctxAno,{
+        type:'line',
+        data:{ labels:Object.keys(anoData), datasets:[{label:'Evolução de Vagas', data:Object.values(anoData), borderColor:'#36A2EB', fill:false, tension:0.3, pointBackgroundColor:"#FF6384"}] },
+        options:{
+            plugins:{ title:{ display:true, text:"📈 Evolução de Vagas em TI (2020-2025)" } },
+            scales:{ y:{ beginAtZero:true } }
+        }
+    });
+}
+
+// Inicialização
+popularFiltros();
+document.getElementById("area-filter").addEventListener("change", atualizarDashboard);
+document.getElementById("regiao-filter").addEventListener("change", atualizarDashboard);
+document.getElementById("reset-filters").addEventListener("click", ()=>{
+    document.getElementById("area-filter").value="all";
+    document.getElementById("regiao-filter").value="all";
+    atualizarDashboard();
 });
+atualizarDashboard();
+
